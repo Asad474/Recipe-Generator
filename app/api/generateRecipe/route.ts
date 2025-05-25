@@ -37,6 +37,5 @@ export const GET = async (req: NextRequest) => {
   ];
 
   const response = await chatModel.invoke(messages);
-  console.log("Resp", response);
   return NextResponse.json(response);
 };
