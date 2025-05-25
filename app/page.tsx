@@ -39,12 +39,18 @@ export default function Home() {
       const recipeData: RecipeType[] = JSON.parse(aiRes);
       setRecipes(recipeData);
       setCurrentPage(1);
-    } catch (err: any) {
-      console.error("Error fetching recipes:", err);
-      if (err.response?.status === 429) {
-        alert("Too many requests. Please try again after a while.");
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        console.error("Axios error:", err);
+
+        if (err.response?.status === 429) {
+          alert("Too many requests. Please try again after a while.");
+        } else {
+          alert("Something went wrong.");
+        }
       } else {
-        alert("Something went wrong.");
+        console.error("Unexpected error:", err);
+        alert("An unexpected error occurred.");
       }
     } finally {
       setLoading(false);
