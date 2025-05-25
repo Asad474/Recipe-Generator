@@ -8,7 +8,7 @@ export const GET = async (req: NextRequest) => {
 
   const messages = [
     new SystemMessage(
-      `You are a helpful recipe assistant. Always respond with a JSON array of recipes for the given ingredients. Generate 25-30 recipes.
+      `You are a helpful recipe assistant. Always respond with a JSON array of recipes for the given ingredients. Generate 20-25 recipes.
        Each recipe must include:
         - title: string
         - ingredients: string[]
@@ -25,5 +25,6 @@ export const GET = async (req: NextRequest) => {
   ];
 
   const response = await chatModel.invoke(messages);
+  console.log("Resp", response);
   return NextResponse.json(response);
 };

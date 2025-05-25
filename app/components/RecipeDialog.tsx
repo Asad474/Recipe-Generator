@@ -16,7 +16,7 @@ type RecipeDialogProps = {
 const RecipeDialog = ({ open, onOpenChange, recipe }: RecipeDialogProps) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-xl overflow-auto w-5/6">
+      <DialogContent className="max-w-xl overflow-auto w-5/6 max-h-5/6">
         <DialogHeader>
           <DialogTitle>{recipe.title}</DialogTitle>
           <DialogDescription>
