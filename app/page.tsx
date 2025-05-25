@@ -39,9 +39,13 @@ export default function Home() {
       const recipeData: RecipeType[] = JSON.parse(aiRes);
       setRecipes(recipeData);
       setCurrentPage(1);
-    } catch (err) {
+    } catch (err: any) {
       console.error("Error fetching recipes:", err);
-      alert("Something went wrong.");
+      if (err.response?.status === 429) {
+        alert("Too many requests. Please try again after a while.");
+      } else {
+        alert("Something went wrong.");
+      }
     } finally {
       setLoading(false);
     }

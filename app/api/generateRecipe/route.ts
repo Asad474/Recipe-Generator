@@ -1,8 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
 import { chatModel } from "@/lib/generateRecipe";
 import { HumanMessage, SystemMessage } from "@langchain/core/messages";
+import { ratelimit } from "@/lib/rateLimiter";
 
 export const GET = async (req: NextRequest) => {
+  const ip = req.headers.get("x-forwarded-for") || "anonymous";
+
+  // Apply rate limiting
+  const { success } = await ratelimit.limit(ip);
+
+  if (!success) {
+    return new NextResponse("Too many requests. Please try again later.", {
+      status: 429,
+    });
+  }
+
   const { searchParams } = new URL(req.url);
   const ingredients: string = searchParams.get("ingredients") || "";
 
